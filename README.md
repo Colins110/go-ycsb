@@ -192,6 +192,9 @@ Common configurations:
 |rocksdb.filter_policy|nil|Sets the filter policy opts reduce disk reads. Many applications will benefit from passing the result of NewBloomFilterPolicy() here|
 |rocksdb.index_type|kBinarySearch|Sets the index type used for this table. __kBinarySearch__: A space efficient index block that is optimized for binary-search-based index. __kHashSearch__: The hash index, if enabled, will do the hash lookup when `Options.prefix_extractor` is provided. __kTwoLevelIndexSearch__: A two-level index implementation. Both levels are binary search indexes|
 |rocksdb.block_align|false|Enable/Disable align data blocks on lesser of page size and block size|
+|rocksdb.report_dbstatus|false|report rocksdb's `Compaction Stats` and `DB Status`|
+|rocksdb.report_interval|10|report rocksdb's `Compaction Stats` and `DB Status`'s interval(s)|
+|rocksdb.report_file|DBStatusReport.txt|report file name|
 
 ### Spanner 
 

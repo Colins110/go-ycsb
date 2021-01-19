@@ -16,9 +16,13 @@
 package rocksdb
 
 import (
+	"bufio"
 	"context"
 	"fmt"
 	"os"
+	"os/signal"
+	"syscall"
+	"time"
 
 	"github.com/magiconair/properties"
 	"github.com/pingcap/go-ycsb/pkg/prop"
@@ -59,6 +63,10 @@ const (
 	rocksdbBlockRestartInterval             = "rocksdb.block_restart_interval"
 	rocksdbFilterPolicy                     = "rocksdb.filter_policy"
 	rocksdbIndexType                        = "rocksdb.index_type"
+	// DBStatus Report
+	rocksdbReportDBstatus = "rocksdb.report_dbstatus"
+	rocksdbReportInterval = "rocksdb.report_interval"
+	rocksdbReportFile     = "rocksdb.report_file"
 	// TODO: add more configurations
 )
 
@@ -91,6 +99,43 @@ func (c rocksDBCreator) Create(p *properties.Properties) (ycsb.DB, error) {
 	db, err := gorocksdb.OpenDb(opts, dir)
 	if err != nil {
 		return nil, err
+	}
+
+	reportDBStatus := p.GetBool(rocksdbReportDBstatus, false)
+	if reportDBStatus {
+		sc := make(chan os.Signal, 1)
+		signal.Notify(sc,
+			syscall.SIGHUP,
+			syscall.SIGINT,
+			syscall.SIGTERM,
+			syscall.SIGQUIT)
+
+		go func() {
+			reportInterval := p.GetInt64(rocksdbReportInterval, 10)
+			t := time.NewTicker(time.Duration(reportInterval) * time.Second)
+			defer t.Stop()
+			fileName := p.GetString(rocksdbReportFile, "DBStatusReport.txt")
+			reportFile, err := os.OpenFile(fileName, os.O_WRONLY|os.O_CREATE, 0666)
+			if err != nil {
+				return
+			}
+			defer reportFile.Close()
+			write := bufio.NewWriter(reportFile)
+			for {
+				select {
+				case <-t.C:
+					curTime := time.Now().Format("2006-01-02 15:04:05")
+					write.WriteString("--------------------- at " + curTime + " ----------------------")
+					write.WriteString(db.GetProperty("rocksdb.stats"))
+					write.WriteString("\n")
+					write.WriteString("\n")
+					write.WriteString("\n")
+					write.Flush()
+				case <-sc:
+					return
+				}
+			}
+		}()
 	}
 
 	return &rocksDB{
