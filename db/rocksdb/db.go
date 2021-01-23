@@ -24,11 +24,11 @@ import (
 	"syscall"
 	"time"
 
+	"github.com/Colins110/gorocksdb"
 	"github.com/magiconair/properties"
 	"github.com/pingcap/go-ycsb/pkg/prop"
 	"github.com/pingcap/go-ycsb/pkg/util"
 	"github.com/pingcap/go-ycsb/pkg/ycsb"
-	"github.com/tecbot/gorocksdb"
 )
 
 //  properties
@@ -53,6 +53,8 @@ const (
 	rocksdbUseFsync                        = "rocksdb.use_fsync"
 	rocksdbWriteBufferSize                 = "rocksdb.write_buffer_size"
 	rocksdbMaxWriteBufferNumber            = "rocksdb.max_write_buffer_number"
+	rocksdbMaxBackgroundJobs               = "rocksdb.max_background_jobs"
+	rocksdbMaxSubcompactions               = "rocksdb.max_subcompactions"
 	// TableOptions/BlockBasedTable
 	rocksdbBlockSize                        = "rocksdb.block_size"
 	rocksdbBlockSizeDeviation               = "rocksdb.block_size_deviation"
@@ -200,6 +202,8 @@ func getOptions(p *properties.Properties) *gorocksdb.Options {
 	opts.SetUseFsync(p.GetBool(rocksdbUseFsync, false))
 	opts.SetWriteBufferSize(p.GetInt(rocksdbWriteBufferSize, 64<<20))
 	opts.SetMaxWriteBufferNumber(p.GetInt(rocksdbMaxWriteBufferNumber, 2))
+	opts.SetMaxBackgroundJobs(p.GetInt64(rocksdbMaxBackgroundJobs, 2))
+	opts.SetMaxSubCompactions(p.GetInt64(rocksdbMaxSubcompactions, 1))
 
 	opts.SetBlockBasedTableFactory(getTableOptions(p))
 

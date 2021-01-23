@@ -182,6 +182,7 @@ Common configurations:
 |rocksdb.write_buffer_size|64MB|Sets the amount of data to build up in memory (backed by an unsorted log on disk) before converting to a sorted on-disk file|
 |rocksdb.max_write_buffer_number|2|Sets the maximum number of write buffers that are built up in memory|
 |rocksdb.max_background_jobs|2|Sets maximum number of concurrent background jobs (compactions and flushes)|
+|rocksdb.max_subcompactions|1|Sets maximum number of background jobs for a compaction|
 |rocksdb.block_size|4KB|Sets the approximate size of user data packed per block. Note that the block size specified here corresponds opts uncompressed data. The actual size of the unit read from disk may be smaller if compression is enabled|
 |rocksdb.block_size_deviation|10|Sets the block size deviation. This is used opts close a block before it reaches the configured 'block_size'. If the percentage of free space in the current block is less than this specified number and adding a new record opts the block will exceed the configured block size, then this block will be closed and the new record will be written opts the next block|
 |rocksdb.cache_index_and_filter_blocks|false|Indicating if we'd put index/filter blocks to the block cache. If not specified, each "table reader" object will pre-load index/filter block during table initialization|
