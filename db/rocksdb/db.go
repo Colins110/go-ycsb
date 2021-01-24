@@ -103,6 +103,10 @@ func (c rocksDBCreator) Create(p *properties.Properties) (ycsb.DB, error) {
 		return nil, err
 	}
 
+	fmt.Println("***************** rocksdb opts *****************")
+	fmt.Printf("MaxMaxBackgroundJobs = %d\n", opts.GetMaxBackgroundJobs())
+	fmt.Printf("MaxSubCompactions = %d\n", opts.GetMaxSubCompactions())
+
 	reportDBStatus := p.GetBool(rocksdbReportDBstatus, false)
 	if reportDBStatus {
 		sc := make(chan os.Signal, 1)
@@ -202,8 +206,8 @@ func getOptions(p *properties.Properties) *gorocksdb.Options {
 	opts.SetUseFsync(p.GetBool(rocksdbUseFsync, false))
 	opts.SetWriteBufferSize(p.GetInt(rocksdbWriteBufferSize, 64<<20))
 	opts.SetMaxWriteBufferNumber(p.GetInt(rocksdbMaxWriteBufferNumber, 2))
-	opts.SetMaxBackgroundJobs(p.GetInt64(rocksdbMaxBackgroundJobs, 2))
-	opts.SetMaxSubCompactions(p.GetInt64(rocksdbMaxSubcompactions, 1))
+	opts.SetMaxBackgroundJobs(p.GetInt(rocksdbMaxBackgroundJobs, 2))
+	opts.SetMaxSubCompactions(uint32(p.GetUint64(rocksdbMaxSubcompactions, 1)))
 
 	opts.SetBlockBasedTableFactory(getTableOptions(p))
 

@@ -24,8 +24,8 @@ github.com/AndreasBriese/bbloom v0.0.0-20180913140656-343706a395b7/go.mod h1:bOv
 github.com/BurntSushi/toml v0.3.1 h1:WXkYYl6Yr3qBf1K79EBnL4mak0OimBfB0XUf9Vl28OQ=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
-github.com/Colins110/gorocksdb v0.0.0-20191217155057-f0fad39f321c h1:SCJfNxADj4f3gl5ewhLohCtm4LhdzXBpKCQ4E/kNHmQ=
-github.com/Colins110/gorocksdb v0.0.0-20191217155057-f0fad39f321c/go.mod h1:PnoZ+21HuQTucAfsBAuLn5hvhw6I/CAzKwMoHxmZ/+o=
+github.com/Colins110/gorocksdb v0.0.0-20210124075647-1b40b42b2482 h1:B0LsYyFsmU9U31SAWgsd9MmKD0j14srjqt7wiK+sdk4=
+github.com/Colins110/gorocksdb v0.0.0-20210124075647-1b40b42b2482/go.mod h1:PnoZ+21HuQTucAfsBAuLn5hvhw6I/CAzKwMoHxmZ/+o=
 github.com/XiaoMi/pegasus-go-client v0.0.0-20181029071519-9400942c5d1c h1:3fAhdHMhoSG57DjJ/dqLFfgD+FoooPbQH6szINbrr3k=
 github.com/XiaoMi/pegasus-go-client v0.0.0-20181029071519-9400942c5d1c/go.mod h1:KcL6D/4RZ8RAYzQ5gKI0odcdWUmCVlbQTOlWrhP71CY=
 github.com/aerospike/aerospike-client-go v1.35.2 h1:TWV2Bn59Ig7SM4Zue84fFsPGlfFJX/6xbuGHyYFS/ag=
